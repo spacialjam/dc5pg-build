@@ -1,0 +1,33 @@
+---
+- name: Set up new Linux server
+  hosts: "{{ vmname }}"
+  tasks:
+    - name: Change hostname
+      ansible.builtin.hostname:
+        name: "{{ vmname }}"
+        use: systemd
+    - name: Change IP configuration
+      community.general.nmcli:
+        conn_name: ens18
+        state: present
+        type: ethernet
+        ip4: "{{ ipaddress }}/24"
+        gw4: "{{ gateway }}"
+        dns4:
+          - 84.22.161.188
+          - 84.22.161.187
+    - name: Reboot for changes to take effect
+      reboot:
+        connect_timeout: 10
+        reboot_timeout: 10
+
+    
+
+    
+
+    
+
+
+
+
+

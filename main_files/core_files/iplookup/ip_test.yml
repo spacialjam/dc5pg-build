@@ -1,0 +1,21 @@
+---
+- name: Check if the IP address is in use
+  hosts: dc5pg_asa
+  gather_facts: false
+  vars_files:
+    - ./secure.yml
+    - ./ip_addr.yml
+  tasks:
+    - name: ping the IP
+      cisco.asa.asa_command:
+        commands:
+          - "ping {{ ip_address }} repeat 3"
+    - name: run a MAC lookup
+      cisco.asa.asa_command:
+        commands:
+          - "show arp | include {{ ip_address }}"
+      register: ip_check_results
+    - name: Save the arp lookup results.
+      copy:
+        content: "{{ ip_check_results.stdout }}" 
+        dest: /tmp/lookup.txt

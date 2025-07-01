@@ -1,0 +1,13 @@
+---
+- name: Set up new Windows server
+  hosts: "{{ vmname }}"
+  tasks:
+    - name: Change hostname
+      ansible.windows.win_hostname:
+        name: "{{ vmname}}"
+    - name: Change IP address
+      ansible.windows.win_shell: "get-netipaddress  -InterfaceAlias 'Ethernet' | new-NetIPAddress -ipaddress {{ ipaddress }} -prefixlength 24 -defaultgateway {{ gateway }}; get-netipaddress  -InterfaceAlias 'Ethernet' -addressfamily 'IPv4' | Select-Object 'interfaceindex' | Set-DnsClientServerAddress -serveraddresses ('10.0.0.10','10.0.1.10')"
+      async: 10 
+      poll: 0
+
+      
