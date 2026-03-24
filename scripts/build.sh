@@ -39,7 +39,7 @@ if [ $linux_vm_total != 0 ]; then
         echo "Please enter the name of the VM"
         read vmname
         echo $vmname
-        echo "Please enter the zone the VM should be plaved in? (web, DB, or DMZ)"
+        echo "Please enter the zone the VM should be placed in? (web, DB, or DMZ)"
         read zone
         while [[ $zone != @("web"|"DB"|"DMZ") ]]; do
             echo "Invalid entry: $zone. The zone needs be be either web, DB, or DMZ"
@@ -122,7 +122,7 @@ if [ $win_vm_total != 0 ]; then
         echo "Please enter the name of the VM"
         read vmname
         echo $vmname
-        echo "Please enter the zone the VM should be plaved in? (web, DB, or DMZ)"
+        echo "Please enter the zone the VM should be placed in? (web, DB, or DMZ)"
         read zone
         while [[ $zone != @("web"|"DB"|"DMZ") ]]; do
             echo "Invalid entry: $zone. The zone needs be be either web, DB, or DMZ"
