@@ -282,7 +282,7 @@ if [ $win_vm_total != 0 ]; then
     # start the lin tfvars file
     echo "win_vms = {" > terraform/windows_vms.auto.tfvars
 
-    # loop through VMs created and pull the linux infor from the json file
+    # loop through VMs created and pull the linux information from the json file
     while read LINE; do
         echo $LINE
         # echo $LINE | jq -r .[].vmname
@@ -307,7 +307,7 @@ if [ $win_vm_total != 0 ]; then
         echo "      ansible_winrm_transport: ntlm" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_winrm_server_cert_validation: ignore" >> ansible_initial_setup/windows_inventory.yml
 
-        #Create and populate Ansible linux variables file
+        #Create and populate Ansible variables file
         echo "vmname: $vmname" > ansible_initial_setup/$vmname-variables.yml
         echo "ipaddress: $ipaddress" >> ansible_initial_setup/$vmname-variables.yml
         echo "gateway: $gateway" >> ansible_initial_setup/$vmname-variables.yml
