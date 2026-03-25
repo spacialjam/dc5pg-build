@@ -4,9 +4,9 @@ echo "Please enter your name:"
 read username
 uuid=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1 )
 # echo $username"-"$uuid
-echo "Making temporary directory at /tmp/$username"-"$uuid/"
-mkdir /tmp/$username"-"$uuid/
-cd /tmp/$username"-"$uuid/
+echo "Making temporary directory at /tmp/lab"-"$username"-"$uuid/"
+mkdir /tmp/lab"-"$username"-"$uuid/
+cd /tmp/lab"-"$username"-"$uuid/
 
 echo "Copying main Terraform files."
 # mkdir terraform
@@ -213,7 +213,7 @@ sleep 60s
 
 echo "Success!! Terraform VM creation complete."
 
-cd /tmp/$username"-"$uuid/
+cd /tmp/lab"-"$username"-"$uuid/
 cp -r /home/build/main_files/core_files/ansible_initial_setup ansible_initial_setup
 lin_host=$(grep linux_ $username-vms.json | wc -l)
 win_host=$(grep win_ $username-vms.json | wc -l)
