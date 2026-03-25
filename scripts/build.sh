@@ -263,7 +263,7 @@ if [ $lin_host != 0 ]; then
         echo "    vlanid: \"$vlanid\"" >> terraform/linux_vms.auto.tfvars
         echo "  }" >> terraform/linux_vms.auto.tfvars
 
-    done < <(grep "linux_" chris-vms.json)
+    done < <(grep "linux_" $username-vms.json)
 
     # finish the tfvars file
     echo "}" >> terraform/linux_vms.auto.tfvars
@@ -314,14 +314,14 @@ if [ $win_vm_total != 0 ]; then
 
         sleep 60
 
-        ansible-playbook ansible_initial_setup/windows_initial_setup.yml -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/$vmname-variables.yml" --extra-vars "@windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass 
+        ansible-playbook ansible_initial_setup/windows_initial_setup.yml -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/$vmname-variables.yml" --extra-vars "@ansible_initial_setup/windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass 
 
         echo "  \"$vmname\" = {" >> terraform/windows_vms.auto.tfvars
         echo "    vmname: \"lab-$vmname\"" >> terraform/windows_vms.auto.tfvars
         echo "    vlanid: \"$vlanid\"" >> terraform/windows_vms.auto.tfvars
         echo "  }" >> terraform/windows_vms.auto.tfvars
 
-    done < <(grep "win_" chris-vms.json)
+    done < <(grep "win_" $username-vms.json)
 
     # finish the tfvars file
     echo "}" >> terraform/windows_vms.auto.tfvars
@@ -360,7 +360,7 @@ if [ $lin_host != 0 ]; then
         echo "      ansible_host: $ipaddress" >> ansible_initial_setup/linux_inventory.yml
         echo "      ansible_user: root" >> ansible_initial_setup/linux_inventory.yml
 
-    done < <(grep "linux_" chris-vms.json)
+    done < <(grep "linux_" $username-vms.json)
     sleep 10
     ansible lab_linux_inventory -i ansible_initial_setup/linux_inventory.yml -m ping
 
@@ -390,10 +390,10 @@ if [ $win_vm_total != 0 ]; then
         echo "      ansible_winrm_transport: ntlm" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_winrm_server_cert_validation: ignore" >> ansible_initial_setup/windows_inventory.yml
 
-    done < <(grep "win_" chris-vms.json)
+    done < <(grep "win_" $username-vms.json)
     sleep 10
-    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_ping
-    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_reboot
+    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_ping
+    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_reboot
 
 fi
 exit 0
