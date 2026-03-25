@@ -301,7 +301,7 @@ if [ $win_vm_total != 0 ]; then
         echo "    $vmname:" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_host: $dhcp_ip" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_user: administrator" >> ansible_initial_setup/windows_inventory.yml
-        echo "      ansible_password: Wfjt2bdge!" >> ansible_initial_setup/windows_inventory.yml
+        echo "      ansible_password: \"{{ default_pass }}\"" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_port: 5986" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_connection: winrm" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_winrm_transport: ntlm" >> ansible_initial_setup/windows_inventory.yml
@@ -314,7 +314,7 @@ if [ $win_vm_total != 0 ]; then
 
         sleep 60
 
-        ansible-playbook ansible_initial_setup/windows_initial_setup.yml -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/$vmname-variables.yml"
+        ansible-playbook ansible_initial_setup/windows_initial_setup.yml -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/$vmname-variables.yml" --extra-vars "@windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass 
 
         echo "  \"$vmname\" = {" >> terraform/windows_vms.auto.tfvars
         echo "    vmname: \"lab-$vmname\"" >> terraform/windows_vms.auto.tfvars
@@ -384,7 +384,7 @@ if [ $win_vm_total != 0 ]; then
         echo "    $vmname:" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_host: $ipaddress" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_user: administrator" >> ansible_initial_setup/windows_inventory.yml
-        echo "      ansible_password: Wfjt2bdge!" >> ansible_initial_setup/windows_inventory.yml
+        echo "      ansible_password: \"{{ default_pass }}\"" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_port: 5986" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_connection: winrm" >> ansible_initial_setup/windows_inventory.yml
         echo "      ansible_winrm_transport: ntlm" >> ansible_initial_setup/windows_inventory.yml
@@ -392,8 +392,8 @@ if [ $win_vm_total != 0 ]; then
 
     done < <(grep "win_" chris-vms.json)
     sleep 10
-    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml -m win_ping
-    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml -m win_reboot
+    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_ping
+    ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_reboot
 
 fi
 exit 0
