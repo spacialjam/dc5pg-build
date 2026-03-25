@@ -396,4 +396,8 @@ if [ $win_vm_total != 0 ]; then
     ansible lab_windows_inventory -i ansible_initial_setup/windows_inventory.yml --extra-vars "@ansible_initial_setup/windows_secure.yml" --vault-password-file ansible_initial_setup/.vaultpass -m win_reboot
 
 fi
+# refresh the terraform date 
+cd terraform
+terraform refresh
+
 exit 0
