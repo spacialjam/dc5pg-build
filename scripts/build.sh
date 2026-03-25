@@ -274,7 +274,7 @@ fi
 if [ $win_vm_total != 0 ]; then 
 # loop through VMs created and pull the Windows info from the json file
 
-    # Create and start Ansible linux inventory file
+    # Create and start Ansible inventory file
 
     echo "lab_windows_inventory:" > ansible_initial_setup/windows_inventory.yml
     echo "  hosts:" >> ansible_initial_setup/windows_inventory.yml
@@ -282,7 +282,7 @@ if [ $win_vm_total != 0 ]; then
     # start the lin tfvars file
     echo "win_vms = {" > terraform/windows_vms.auto.tfvars
 
-    # loop through VMs created and pull the linux information from the json file
+    # loop through VMs created and pull the information from the json file
     while read LINE; do
         echo $LINE
         # echo $LINE | jq -r .[].vmname
