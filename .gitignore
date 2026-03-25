@@ -59,6 +59,7 @@ terraform.rc
 
 # vaults and secure files
 secure.yml
+windows_secure.yml
 .vaultpass
 providers.tf
 
