@@ -1,6 +1,7 @@
 #!/bin/sh
 
-echo "Please enter your name:"
+echo "Please enter your name or a unique name:"
+echo "Please only use underscores (_) as a seperator as the services used in this script might not accept anything else."
 read username
 uuid=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1 )
 # echo $username"-"$uuid
