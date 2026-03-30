@@ -16,7 +16,7 @@ read confirmation
 if [ $confirmation = Y ] || [ $confirmation = y ]; then
     echo "Stopping $lab_choice and removing VMs"
     cd /tmp/$lab_choice/terraform
-    terraform destroy # --auto-approve
+    terraform destroy --auto-approve
     echo "emptying and removing lab folder and files"
     cd /tmp/
     rm -r $lab_choice
