@@ -68,3 +68,4 @@ apply.log
 plan.log 
 
 ansible_loop_tests/
+testing/
