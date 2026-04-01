@@ -9,7 +9,7 @@ done
 echo "Which lab do you wish to end?"
 read lab_choice
 echo "You have choosen to end the lab $lab_choice."
-echo "This will run the terrafom destroy commend wiping the VMs and then delete the folder containing all the data."
+echo "This will run the terrafom destroy command wiping the VMs and then delete the folder containing all the data."
 echo "Please confirm that you want to go ahead (Y/N)"
 read confirmation
 
