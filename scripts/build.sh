@@ -196,8 +196,9 @@ fi
 
 cd terraform
 /usr/bin/terraform init
+/usr/bin/terraform plan -json | tee plan.log
 
-if /usr/bin/terraform plan -json | tee plan.log; then
+if ! /usr/bin/grep -q Error plan.log; then
     echo "Terraform plan successful applying changes"
     /usr/bin/terraform apply -json --auto-approve | tee apply.log
 else
@@ -332,8 +333,9 @@ else
 fi
 
 cd terraform
+/usr/bin/terraform plan -json | tee plan.log
 
-if /usr/bin/terraform plan -json | tee plan.log; then
+if ! /usr/bin/grep -q Error plan.log; then
     echo "Terraform plan successful applying changes"
     /usr/bin/terraform apply -json --auto-approve | tee -a apply.log
 else
