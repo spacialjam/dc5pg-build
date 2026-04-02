@@ -34,7 +34,6 @@ echo "lin_vms = {" > terraform/linux_vms.auto.tfvars
 while read LINE; do 
     vmname=$(echo $LINE | jq -r .[].vmname)
     echo $vmname
-    echo "Please enter the zone the VM should be placed in? (web, DB, or DMZ)"
     zone=$(echo $LINE | jq -r .[].zone)
     while [[ $zone != @("web"|"DB"|"DMZ") ]]; do
         echo $vmname
