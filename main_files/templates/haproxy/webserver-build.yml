@@ -1,0 +1,30 @@
+---
+- name: Install a apachae and PHP on the web VMs
+  hosts: web
+  tasks:
+    - name: Install packages
+      ansible.builtin.dnf:
+        name: 
+          - httpd
+          - php
+          - php-common
+        state: present
+        # disable_gpg_check: true
+    - name: Copy the installer
+      ansible.builtin.copy:
+        src: "/home/build/main_files/templates/haproxy/template.php"
+        dest: /var/www/html/index.php
+    - name: Reload service httpd, and enable it.
+      ansible.builtin.service:
+        name: httpd
+        state: reloaded
+        enabled: yes
+    - name: Permit traffic in default zone for https service
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+    - name: Reload firewalld service to enable the rule change.
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
