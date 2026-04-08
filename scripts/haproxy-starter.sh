@@ -1,11 +1,32 @@
 #!/bin/sh
 
-echo "Please enter your name or a unique name:"
-echo "Please only use hyphens (-) as a seperator as the services used in this script might not accept anything else."
-read username
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 [-n name]"
+    exit 1
+fi
+
+while getopts "hn:" opt; do
+    case "$opt" in
+    h)
+        echo "Usage: $0 [-n name]"
+        exit 0
+        ;;
+    n)  username=$OPTARG
+        ;;
+    \?)
+        echo "invalid option!!!"
+        echo "Usage: $0 [-n name]"
+        exit 1
+        ;;
+    esac
+done
+
+# echo "Please enter your name or a unique name:"
+# echo "Please only use hyphens (-) as a seperator as the services used in this script might not accept anything else."
+# read username
 uuid=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1 )
 # echo $username"-"$uuid
-echo "Making temporary directory at /tmp/lab"-"haproxy"-"$username"-"$uuid/"
+echo "Making temporary directory at /tmp/lab"-"$username"-"$uuid/"
 mkdir /tmp/lab"-"haproxy"-"$username"-"$uuid/
 cd /tmp/lab"-"haproxy"-"$username"-"$uuid/
 
@@ -35,12 +56,7 @@ while read LINE; do
     vmname=$(echo $LINE | jq -r .[].vmname)
     echo $vmname
     zone=$(echo $LINE | jq -r .[].zone)
-    while [[ $zone != @("web"|"DB"|"DMZ") ]]; do
-        echo $vmname
-        echo "Invalid entry: $zone. The zone needs be be either web, DB, or DMZ"
-        echo "try again:"
-        read zone
-    done
+    
     case $zone in
         web)    vlanid=1808
                 subnet="10.0.2"
@@ -245,5 +261,7 @@ fi
 # refresh the terraform date 
 cd terraform
 terraform refresh
+cd ../
+rm $username-vms-temp.json
 
 exit 0
