@@ -69,3 +69,4 @@ plan.log
 
 ansible_loop_tests/
 testing/
+temp/

@@ -26,9 +26,9 @@ done
 # read username
 uuid=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1 )
 # echo $username"-"$uuid
-echo "Making temporary directory at /tmp/lab"-"$username"-"$uuid/"
-mkdir /tmp/lab"-"haproxy"-"$username"-"$uuid/
-cd /tmp/lab"-"haproxy"-"$username"-"$uuid/
+echo "Making temporary directory at /home/build/temp/lab"-"$username"-"$uuid/"
+mkdir /home/build/temp/lab"-"haproxy"-"$username"-"$uuid/
+cd /home/build/temp/lab"-"haproxy"-"$username"-"$uuid/
 
 echo "Copying main Terraform files."
 # mkdir terraform
