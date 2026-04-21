@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "The running labs are:"
-running_labs="$(find /home/build/temp -type d -name "lab-*" 2>/dev/null | awk -F "/" '{print $3}')"
+running_labs="$(find /home/build/temp -type d -name "lab-*" 2>/dev/null | awk -F "/" '{print $5}')"
 for i in $running_labs; do (
     echo $i
 )
