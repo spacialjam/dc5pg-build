@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "The running labs are:"
-running_labs="$(find /tmp -type d -name "lab-*" 2>/dev/null | awk -F "/" '{print $3}')"
+running_labs="$(find /home/build/temp -type d -name "lab-*" 2>/dev/null | awk -F "/" '{print $3}')"
 for i in $running_labs; do (
     echo $i
 )
@@ -15,10 +15,10 @@ read confirmation
 
 if [ $confirmation = Y ] || [ $confirmation = y ]; then
     echo "Stopping $lab_choice and removing VMs"
-    cd /tmp/$lab_choice/terraform
+    cd /home/build/temp/$lab_choice/terraform
     terraform destroy --auto-approve
     echo "emptying and removing lab folder and files"
-    cd /tmp/
+    cd /home/build/temp/
     rm -r $lab_choice
 else
     echo "Nothing to do, exiting script"
