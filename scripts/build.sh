@@ -5,9 +5,9 @@ echo "Please only use hyphens (-) as a seperator as the services used in this sc
 read username
 uuid=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1 )
 # echo $username"-"$uuid
-echo "Making temporary directory at /tmp/lab"-"$username"-"$uuid/"
-mkdir /tmp/lab"-"$username"-"$uuid/
-cd /tmp/lab"-"$username"-"$uuid/
+echo "Making temporary directory at /home/build/temp/lab"-"$username"-"$uuid/"
+mkdir /home/build/temp/lab"-"$username"-"$uuid/
+cd /home/build/temp/lab"-"$username"-"$uuid/
 
 echo "Copying main Terraform files."
 # mkdir terraform
@@ -215,7 +215,7 @@ sleep 60s
 
 echo "Success!! Terraform VM creation complete."
 
-cd /tmp/lab"-"$username"-"$uuid/
+cd ../
 cp -r /home/build/main_files/core_files/ansible_initial_setup ansible_initial_setup
 lin_host=$(grep linux_ $username-vms.json | wc -l)
 win_host=$(grep win_ $username-vms.json | wc -l)
